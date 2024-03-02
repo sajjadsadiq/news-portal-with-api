@@ -12,12 +12,21 @@
     />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="container mx-auto px-10"></body>
+  <body class="container mx-auto px-10">
     <header 
       <div id="newsCategoryContainer" class="flex justify-between text-[#858585] text-lg py-10"></div>
     </header>
     <main>
+      <!-- Search News -->
+      <div class="mx-auto w-6/12">
+        <div class="join ">
+          <input id="searchInputField" class="input input-bordered join-item" placeholder="Search News"/>
+          <button onclick="handleSearchNews()" class="btn join-item rounded-r-full">Search</button>
+        </div>
+      </div>
+      
 
+      <!-- News Container -->
       <div id="news-post-container" class="">
        
       </div>

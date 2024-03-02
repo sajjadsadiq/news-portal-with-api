@@ -35,7 +35,6 @@ const fetchNewsCategoryPost = async (categoryId) => {
   const data = await res.json();
   const newsPost = data.data;
   newsPostContainer.innerHTML = "";
-  console.log(newsPost);
 
   newsPost.forEach((newsItem) => {
     // console.log(newsItem);
@@ -86,5 +85,20 @@ const fetchNewsPostDetails = async (news_id) => {
   const newsDetails = data.data[0];
   console.log(newsDetails);
 };
+
+const handleSearchNews = () => {
+  const searchInputField = document.getElementById("searchInputField");
+
+  let searchValue = searchInputField.value;
+  // console.log(searchValue);
+  if (searchValue) {
+    fetchNewsCategoryPost(searchValue);
+    // Clear a input field
+    searchInputField.value = "";
+  } else {
+    alert("Please enter a valid search value");
+  }
+};
+// Function Call
 fetchCategoryName();
 fetchNewsCategoryPost(selectedCategory);
