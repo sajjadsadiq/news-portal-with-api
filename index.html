@@ -13,23 +13,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="container mx-auto px-10">
+    <!-- Search News -->
+    <div class="mx-auto w-40 mt-10">
+      <div class="join ">
+        <input id="searchInputField" class="input input-bordered join-item" placeholder="Search News"/>
+        <button onclick="handleSearchNews()" class="btn join-item rounded-r-full">Search</button>
+      </div>
+    </div>
+
+    <!-- loading spinner -->
+    <div id="loading_spinner" class=" hidden">
+      <span class="loading loading-ball loading-xs"></span>
+      <span class="loading loading-ball loading-sm"></span>
+      <span class="loading loading-ball loading-md"></span>
+      <span class="loading loading-ball loading-lg"></span>
+  </div>
+
+    <!-- header -->
     <header 
-      <div id="newsCategoryContainer" class="flex justify-between text-[#858585] text-lg py-10"></div>
+      <div id="newsCategoryContainer" class="flex justify-between text-[#858585] text-lg py-10">
+        <p></p>
+      </div>
     </header>
     <main>
-      <!-- Search News -->
-      <div class="mx-auto w-6/12">
-        <div class="join ">
-          <input id="searchInputField" class="input input-bordered join-item" placeholder="Search News"/>
-          <button onclick="handleSearchNews()" class="btn join-item rounded-r-full">Search</button>
-        </div>
-      </div>
       
+      <!-- Data not found -->
+      <div id="data-not-found" class="flex items-center justify-center hidden">
+        <p>Sorry! Data Not Found.</p>
+      </div>
 
       <!-- News Container -->
       <div id="news-post-container" class="">
        
       </div>
+
+      
 
     </main>
 

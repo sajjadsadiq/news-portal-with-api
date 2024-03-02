@@ -1,11 +1,14 @@
 // Selector Element
 const newsCategoryContainer = document.getElementById("newsCategoryContainer");
 const newsPostContainer = document.getElementById("news-post-container");
+const loadingSpinner = document.getElementById("loading_spinner");
+const dataNotFound = document.getElementById("data-not-found");
 
 let selectedCategory = "08";
 
 // fetch Categori
 const fetchCategoryName = async () => {
+  loadingSpinnerFun(true);
   const res = await fetch(
     "https://openapi.programming-hero.com/api/news/categories"
   );
@@ -16,13 +19,27 @@ const fetchCategoryName = async () => {
 
     const categoryNameEl = document.createElement("a");
     categoryNameEl.innerText = category_name;
-    categoryNameEl.classList = "btn";
+    categoryNameEl.classList = "news-btn btn";
     newsCategoryContainer.appendChild(categoryNameEl);
 
     // Add Event Listener
-    // console.log(categoryNameEl);
     categoryNameEl.addEventListener("click", () => {
       fetchNewsCategoryPost(category_id);
+
+      // Button background color set
+      const newsButtonAll = document.querySelectorAll(".news-btn");
+      newsButtonAll.forEach((btn) => {
+        btn.classList.remove(
+          "bg-green-600",
+          "hover:bg-green-500",
+          "text-white"
+        );
+      });
+      categoryNameEl.classList.add(
+        "bg-green-600",
+        "hover:bg-green-500",
+        "text-white"
+      );
     });
   });
 };
@@ -34,6 +51,13 @@ const fetchNewsCategoryPost = async (categoryId) => {
   );
   const data = await res.json();
   const newsPost = data.data;
+
+  // data not found
+  if (newsPost.length === 0) {
+    dataNotFound.classList.remove("hidden");
+  } else {
+    dataNotFound.classList.add("hidden");
+  }
   newsPostContainer.innerHTML = "";
 
   newsPost.forEach((newsItem) => {
@@ -75,6 +99,7 @@ const fetchNewsCategoryPost = async (categoryId) => {
     `;
     newsPostContainer.appendChild(newsPostEl);
   });
+  loadingSpinnerFun(false);
 };
 
 const fetchNewsPostDetails = async (news_id) => {
@@ -99,6 +124,17 @@ const handleSearchNews = () => {
     alert("Please enter a valid search value");
   }
 };
+
+// Loading Spinner
+const loadingSpinnerFun = (isTrue) => {
+  if (isTrue) {
+    loadingSpinner.classList.remove("hidden");
+  } else {
+    loadingSpinner.classList.add("hidden");
+  }
+};
+
 // Function Call
 fetchCategoryName();
+
 fetchNewsCategoryPost(selectedCategory);
