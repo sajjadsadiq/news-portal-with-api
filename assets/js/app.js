@@ -20,6 +20,7 @@ const fetchCategoryName = async () => {
     newsCategoryContainer.appendChild(categoryNameEl);
 
     // Add Event Listener
+    // console.log(categoryNameEl);
     categoryNameEl.addEventListener("click", () => {
       fetchNewsCategoryPost(category_id);
     });
@@ -34,11 +35,15 @@ const fetchNewsCategoryPost = async (categoryId) => {
   const data = await res.json();
   const newsPost = data.data;
   newsPostContainer.innerHTML = "";
+  console.log(newsPost);
 
   newsPost.forEach((newsItem) => {
+    // console.log(newsItem);
     const { thumbnail_url, title, total_view, details, author, _id } = newsItem;
+    // console.log(_id);
     const { name, img, published_date } = author;
-    // Dynamic Post
+
+    // Dynamic News
     const newsPostEl = document.createElement("div");
     newsPost.classList = "";
     newsPostEl.innerHTML = `
@@ -62,22 +67,24 @@ const fetchNewsCategoryPost = async (categoryId) => {
         <div class="start">
           <img src="./assets/images/star-outlined.svg" alt="">
         </div>
-        <button id="more-btn" onClick=${fetchNewsPostDetails(
-          _id
-        )} class="more_btn cursor-pointer">
+        <button onclick="fetchNewsPostDetails('${_id}')" id="more-btn" class="more_btn cursor-pointer">
           <img src="./assets/images/arrow-right.svg" alt="">
         </button>
       </div>
     </div>
     </div>
     `;
-
     newsPostContainer.appendChild(newsPostEl);
   });
 };
 
-const fetchNewsPostDetails = (id) => {
-  // console.log("click", id);
+const fetchNewsPostDetails = async (news_id) => {
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/news/${news_id}`
+  );
+  const data = await res.json();
+  const newsDetails = data.data[0];
+  console.log(newsDetails);
 };
 fetchCategoryName();
 fetchNewsCategoryPost(selectedCategory);
